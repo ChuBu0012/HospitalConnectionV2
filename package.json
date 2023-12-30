@@ -1,0 +1,33 @@
+{
+  "name": "hospital",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
+    "@reduxjs/toolkit": "^1.9.5",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "mongodb": "^5.6.0",
+    "mongodb-client-encryption": "^2.8.0",
+    "mongoose": "^7.3.1",
+    "next": "^13.5.6",
+    "next-auth": "^4.22.1",
+    "postcss": "^8.4.32",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-redux": "^8.1.1",
+    "react-spinners": "^0.13.8",
+    "supports-color": "^9.4.0",
+    "sweetalert2": "^11.4.8",
+    "tailwindcss": "3.3.2",
+    "twilio": "^4.14.1"
+  }
+}
