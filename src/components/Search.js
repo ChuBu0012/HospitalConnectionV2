@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useRef } from 'react'
 import { ClipLoader } from 'react-spinners';
 
-export default function search({ setSearch, click, src, status, loading, text }) {
+export default function search({ setSearch, click, src, status, loading, text, doctor }) {
     const len = useRef()
     return (
         loading ? <div className='flexitemcenter justify-center'>
@@ -33,10 +33,13 @@ export default function search({ setSearch, click, src, status, loading, text })
             </div>
 
 
-            {status && <p className=" text-center bg-green-500 hover:bg-green-500 text-white w-1/4 min-w-[162px] m-auto my-4 font-bold py-2 px-4 rounded">
+            {(status && !doctor) && <p className=" text-center bg-green-500 hover:bg-green-500 text-white w-1/4 min-w-[162px] m-auto my-4 font-bold py-2 px-4 rounded">
                 ไม่พบข้อมูล...<br/>
                 กรุณาติดต่อเบอร์ <code>0xx-xxx-xxxx</code>
             </p>}
+            {(status && doctor) && <Link href={'/new-patient'} className=" text-center bg-green-700 hover:bg-green-600 text-white w-1/4 min-w-[162px] m-auto my-4 font-bold py-2 px-4 rounded">
+                ลงทะเบียนผู้ป่วยใหม่
+            </Link>}
         </div>
     )
 }

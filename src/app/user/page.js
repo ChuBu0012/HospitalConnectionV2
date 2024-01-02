@@ -58,6 +58,7 @@ export default function Page() {
                     setSearch={(e) => setSearch(e.target.value)}
                     status={statusBtn}
                     loading={loading}
+                    doctor={false}
                     click={() => {
                         handleSearch()
                     }}

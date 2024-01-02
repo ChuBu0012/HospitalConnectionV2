@@ -34,7 +34,7 @@ export default function Brithday({ checkdoctor }) {
 
                 <select id='year' disabled={checkdoctor} value={birthday?.year} onInput={(e) => dispatch(setYear(e.target.value))} className='block flex-1 w-full max-w-[198px] p-2 border border-gray-300 rounded-md'>
                     <option value=''>-- ปี --</option>
-                    {Array.from({ length: 124 }, (_, i) => 2023 - i).map((year, i) => (
+                    {Array.from({ length: 124 }, (_, i) => new Date().getFullYear() - i).map((year, i) => (
                         <option key={i} value={year}>
                             {year}
                         </option>
