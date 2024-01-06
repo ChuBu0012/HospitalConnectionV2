@@ -5,7 +5,11 @@ const initialState = {
     prefix: "",
     name: "",
     sex: "",
-    age: 0,
+    age: {
+        days: 0,
+        months: 0,
+        years: 0,
+    },
     birthday: {
         day: 0,
         month: 0,

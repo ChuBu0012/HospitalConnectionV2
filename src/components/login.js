@@ -42,13 +42,13 @@ export default function Login() {
   };
   return (
     <div className={" h-full 2xl:w-4/6 lg:p-0 p-6 w-5/6 md:w-full lg:w-5/6 rounded-md bg-white/90 md:bg-transparent"}>
-      <h1 className="text-4xl">Login</h1>
+      <h1 className="text-4xl">เข้าสู่ระบบ</h1>
 
-      <div className="mt-10 sm:w-full lg:max-w-sm">
+      <div className="mt-10 sm:w-full lg:max-w-md">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username" className="block text-lg font-medium leading-6 text-gray-900">
-              Username
+              ชื่อผู้ใช้งาน
             </label>
             <div className="mt-2 flex items-center">
               <div className="border border-gray-300 border-r-0 rounded-s-md bg-gray-100 h-9 p-2 px-3 flex justify-center items-center">
@@ -81,7 +81,7 @@ export default function Login() {
           <div>
             <div className="flex items-center justify-between flex-wrap">
               <label htmlFor="password" className="block text-lg font-medium leading-6 text-gray-900">
-                Password
+                รหัสผ่าน
               </label>
             </div>
             <div className="mt-2 flex items-center justify-center">
@@ -118,7 +118,7 @@ export default function Login() {
             <div className="flex items-center">
               <input defaultChecked={true} type="checkbox" className="w-4 h-4 text-blue-600 rounded" />
               <label htmlFor="remember" className="block ml-2 text-lg font-medium leading-6 text-gray-900">
-                Remember Me
+                บันทึกรหัสผ่านของฉัน
               </label>
             </div>
             <div className="text-sm">
@@ -133,7 +133,7 @@ export default function Login() {
               type="submit"
               className="flex lg:w-2/4 w-full justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             >
-              Login
+              เข้าสู่ระบบ
             </button>
           </div>
         </form >

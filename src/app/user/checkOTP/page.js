@@ -91,9 +91,9 @@ const Otp = () => {
                     <div className="max-w-sm mx-auto md:max-w-lg">
                         <div className="w-full">
                             <div className="bg-white py-3 rounded text-center">
-                                <h1 className="text-2xl font-bold">OTP Verification</h1>
+                                <h1 className="text-2xl font-bold">กรุณาใส่ OTP</h1>
                                 <div className="flex flex-col mt-4">
-                                    <span>Enter the OTP</span>
+                                    <span>ที่ท่านได้รับ</span>
                                 </div>
 
                                 <div id="otp" className="flex flex-row justify-center text-center px-2 mt-5">
@@ -129,7 +129,7 @@ const Otp = () => {
                             className="complete ml-4 bg-[#1974BC] hover:bg-transparent hover:text-[#1974BC] hover:border-[#1974BC] hover:border-2 text-white w-12 h-8 rounded font-Prompt"
                             onClick={onClick}
                         >
-                            OK
+                            ตกลง
                         </button>
                     </div>
                 </div>

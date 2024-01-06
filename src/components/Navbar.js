@@ -17,8 +17,7 @@ export default function Navbar({ children }) {
     { text: "ข้อมูลการรับบริการ" },
     { text: "สุขภาพ" },
     { text: "เกี่ยวกับเรา" },
-    { text: <img className="w-[14px]" src="/userIcon.png" alt="" /> },
-    { text: "signOut" },
+    { text: "ออกจากระบบ" },
   ];
 
   const dispatch = useDispatch()

@@ -270,7 +270,7 @@ function EditForm({ id, loading }) {
             Swal.fire({
               icon: "success",
               title: "แก้ไขสำเร็จ",
-              text: "Good job!",
+              confirmButtonText:"ตกลง"
             }).then((res) => {
               if (res.isConfirmed) {
                 dispatch(setopen());
@@ -286,6 +286,7 @@ function EditForm({ id, loading }) {
               icon: "error",
               title: "แก้ไขไม่สำเร็จ",
               text: "กรุณาตรวจสอบข้อมูล",
+              confirmButtonText:"ตกลง"
             });
           })
           .finally(() => setloading_in(false));
@@ -310,7 +311,7 @@ function EditForm({ id, loading }) {
             Swal.fire({
               icon: "success",
               title: "ลบข้อมูลสำเร็จ",
-              text: "Good job!",
+              text: "!",
             }).then((res) => {
               if (res.isConfirmed) {
                 router.push(
@@ -366,20 +367,31 @@ function EditForm({ id, loading }) {
   };
 
   useEffect(() => {
-    //เช็คอายุจาก วัน เดือน ปีเกิด
-    const currentDate = new Date();
-    const birthDate = new Date(
-      birthday?.year,
-      birthday?.month - 1, // Months are zero-based (January is 0, February is 1, etc.)
-      birthday?.day
-    );
+    // เช็คว่าทุก field ของวันเกิดถูกกรอกครบหรือไม่
+    if (birthday.year && birthday.month && birthday.day) {
+      // วันปัจจุบัน
+      const currentDate = new Date();
 
-    const ageInMilliseconds = currentDate - birthDate;
-    const ageDate = new Date(ageInMilliseconds);
-    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+      // วันเกิด
+      const birthDate = new Date(
+        birthday.year,
+        birthday.month - 1, // เดือนเริ่มที่ 0 (มกราคม = 0, กุมภาพันธ์ = 1, เป็นต้น)
+        birthday.day
+      );
 
-    if (birthday?.year && birthday?.month && birthday?.day) {
-      dispatch(setAge(age));
+      // คำนวณอายุในมิลลิวินาที
+      const ageInMilliseconds = currentDate - birthDate;
+
+      // แปลงเป็นวันที่
+      const ageDate = new Date(ageInMilliseconds);
+
+      // คำนวณอายุเป็น ปี, เดือน, วัน
+      const years = Math.abs(ageDate.getUTCFullYear() - 1970);
+      const months = ageDate.getUTCMonth();
+      const days = ageDate.getUTCDate() - 1; // ลบออก 1 เนื่องจากนับวันที่ 0
+
+      // Dispatch ค่าอายุไปยัง Redux
+      dispatch(setAge({ years, months, days }));
     }
   }, [birthday]);
   return loading || loading_in ? (
@@ -483,12 +495,10 @@ function EditForm({ id, loading }) {
           <div className="relative flex-nowrap">
             <input
               placeholder="เลือกวันเกิดของคุณ"
-              disabled={true}
+              disabled
               id="age"
-              value={age ? age : ""}
-              min={`1`}
-              onInput={(e) => dispatch(setAge(parseInt(e.target.value)))}
-              type="number"
+              value={birthday?.day && birthday?.month && birthday?.year ?`${age?.years} ปี ${age?.months} เดือน ${age?.days} วัน` : ""}
+              type="text"
               className=" outline-none rounded bg-bginput px-2 py-1 ml-4 border"
             />
             <label className="text-2xl text-red-500 ml-2">*</label>

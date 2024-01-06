@@ -63,7 +63,7 @@ function Form() {
 
     const Id_tel = document.getElementById("tel");
 
-    if (idcard === "" || idCardError === "เลขบัตรผิด"  || idcard.length != 13) {
+    if (idcard === "" || idCardError === "เลขบัตรผิด" || idcard.length != 13) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -258,7 +258,7 @@ function Form() {
         Swal.fire({
           icon: "success",
           title: "บันทึกสำเร็จ",
-          text: "Good job!",
+          confirmButtonText: "ตกลง",
         }).then((res) => {
           if (res.isConfirmed) {
             dispatch(setopen());
@@ -274,6 +274,7 @@ function Form() {
           icon: "error",
           title: "บันทึกไม่สำเร็จ",
           text: "กรุณาตรวจสอบข้อมูล",
+          confirmButtonText: "ตกลง",
         });
       })
       .finally(() => setloading(false));
@@ -308,20 +309,31 @@ function Form() {
     }
   };
   useEffect(() => {
-    //เช็คอายุจาก วัน เดือน ปีเกิด
-    const currentDate = new Date();
-    const birthDate = new Date(
-      birthday.year,
-      birthday.month - 1, // Months are zero-based (January is 0, February is 1, etc.)
-      birthday.day
-    );
-
-    const ageInMilliseconds = currentDate - birthDate;
-    const ageDate = new Date(ageInMilliseconds);
-    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-
+    // เช็คว่าทุก field ของวันเกิดถูกกรอกครบหรือไม่
     if (birthday.year && birthday.month && birthday.day) {
-      dispatch(setAge(age));
+      // วันปัจจุบัน
+      const currentDate = new Date();
+
+      // วันเกิด
+      const birthDate = new Date(
+        birthday.year,
+        birthday.month - 1, // เดือนเริ่มที่ 0 (มกราคม = 0, กุมภาพันธ์ = 1, เป็นต้น)
+        birthday.day
+      );
+
+      // คำนวณอายุในมิลลิวินาที
+      const ageInMilliseconds = currentDate - birthDate;
+
+      // แปลงเป็นวันที่
+      const ageDate = new Date(ageInMilliseconds);
+
+      // คำนวณอายุเป็น ปี, เดือน, วัน
+      const years = Math.abs(ageDate.getUTCFullYear() - 1970);
+      const months = ageDate.getUTCMonth();
+      const days = ageDate.getUTCDate() - 1; // ลบออก 1 เนื่องจากนับวันที่ 0
+
+      // Dispatch ค่าอายุไปยัง Redux
+      dispatch(setAge({ years, months, days }));
     }
   }, [birthday]);
 
@@ -348,18 +360,20 @@ function Form() {
             type="text"
             className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
           />
-           <label className="text-2xl text-red-500 ml-2 relative">
-                  *
-                  {idCardError && (
-                    <span
-                      className={`error absolute -left-10 top-2 text-lg ${
-                        idCardError === "เลขบัตรถูกต้อง" ? "text-green-400 font-bold -left-8" : ""
-                      }`}
-                    >
-                      {idCardError === "เลขบัตรถูกต้อง" ? "✓" : "❌"}
-                    </span>
-                  )}
-                </label>
+          <label className="text-2xl text-red-500 ml-2 relative">
+            *
+            {idCardError && (
+              <span
+                className={`error absolute -left-10 top-2 text-lg ${
+                  idCardError === "เลขบัตรถูกต้อง"
+                    ? "text-green-400 font-bold -left-8"
+                    : ""
+                }`}
+              >
+                {idCardError === "เลขบัตรถูกต้อง" ? "✓" : "❌"}
+              </span>
+            )}
+          </label>
         </div>
       </div>
       {/* คำนำหน้า */}
@@ -422,10 +436,8 @@ function Form() {
               placeholder="เลือกวันเกิดของคุณ"
               disabled={true}
               id="age"
-              value={age ? age : ""}
-              min={`1`}
-              onInput={(e) => dispatch(setAge(parseInt(e.target.value)))}
-              type="number"
+              value={birthday?.day && birthday?.month && birthday?.year ?`${age.years} ปี ${age.months} เดือน ${age.days} วัน` : ""}
+              type="text"
               className=" outline-none rounded bg-bginput px-2 py-1 ml-4 border"
             />
             <label className="text-2xl text-red-500 ml-2">*</label>

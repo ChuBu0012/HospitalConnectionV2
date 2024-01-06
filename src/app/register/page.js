@@ -24,7 +24,7 @@ const Register = () => {
     organization: "",
     position: "",
     phone: "",
-    age: 0,
+    age: { years: 0, months: 0, days: 0 },
     password: "",
   });
   const [conpassword, setConpassword] = useState("");
@@ -98,7 +98,11 @@ const Register = () => {
     const Id_day = document.getElementById("day");
     const Id_month = document.getElementById("month");
     const Id_year = document.getElementById("year");
-    if (state.idcard === "" || idCardError === "เลขบัตรผิด"  || state.idcard.length != 13) {
+    if (
+      state.idcard === "" ||
+      idCardError === "เลขบัตรผิด" ||
+      state.idcard.length != 13
+    ) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -110,7 +114,7 @@ const Register = () => {
         Id_idcard.classList.remove("animate-shake");
       }, 2000);
       return;
-    } else if (state.doctor_id === "") {
+    } /*else if (state.doctor_id === "") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -122,7 +126,7 @@ const Register = () => {
         Id_doctor_id.classList.remove("animate-shake");
       }, 2000);
       return;
-    } else if (state.password === "") {
+    }*/ else if (state.password === "") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -254,7 +258,6 @@ const Register = () => {
             Swal.fire({
               icon: "success",
               title: "บันทึกสำเร็จ",
-              text: "Good job!",
             }).then((res) => {
               if (res.isConfirmed) {
                 router.push("/");
@@ -268,6 +271,7 @@ const Register = () => {
               icon: "error",
               title: "ลงทะเบียนไม่สำเร็จ",
               text: err?.response?.data?.error,
+              confirmButtonText: "ตกลง",
             });
           })
           .finally(() => setloading(false));
@@ -275,22 +279,27 @@ const Register = () => {
     });
   };
   useEffect(() => {
-    //เช็คอายุจาก วัน เดือน ปีเกิด
-    const currentDate = new Date();
-    const birthDate = new Date(
-      state.birthday.year,
-      state.birthday.month - 1, // Months are zero-based (January is 0, February is 1, etc.)
-      state.birthday.day
-    );
-
-    const ageInMilliseconds = currentDate - birthDate;
-    const ageDate = new Date(ageInMilliseconds);
-    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-
     if (state.birthday.year && state.birthday.month && state.birthday.day) {
-      setState({ ...state, age: age });
+      const currentDate = new Date();
+
+      const birthDate = new Date(
+        state.birthday.year,
+        state.birthday.month - 1,
+        state.birthday.day
+      );
+
+      const ageInMilliseconds = currentDate - birthDate;
+
+      const ageDate = new Date(ageInMilliseconds);
+
+      const years = Math.abs(ageDate.getUTCFullYear() - 1970);
+      const months = ageDate.getUTCMonth();
+      const days = ageDate.getUTCDate() - 1;
+
+      setState({ ...state, age: { years, months, days } });
     }
   }, [state.birthday]);
+
   return (
     <Navbar>
       {loading ? (
@@ -317,7 +326,7 @@ const Register = () => {
                   id="idcard"
                   type="text"
                   name="idcard"
-                  placeholder="idcard"
+                  placeholder="กรุณาเลือกวันเดือนปีเกิด"
                   onInput={(e) => handleIdCardChange(e)}
                   className="outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -326,7 +335,9 @@ const Register = () => {
                   {idCardError && (
                     <span
                       className={`error absolute -left-10 top-2 text-lg ${
-                        idCardError === "เลขบัตรถูกต้อง" ? "text-green-400 font-bold -left-8" : ""
+                        idCardError === "เลขบัตรถูกต้อง"
+                          ? "text-green-400 font-bold -left-8"
+                          : ""
                       }`}
                     >
                       {idCardError === "เลขบัตรถูกต้อง" ? "✓" : "❌"}
@@ -342,12 +353,13 @@ const Register = () => {
                 <input
                   id="doctor_id"
                   name="doctor_id"
-                  placeholder="doctor_id"
                   onInput={(e) => setvalue(e, "doctor_id")}
                   type="text"
                   className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
-                <label className="text-2xl text-red-500 ml-2">*</label>
+                <label className="text-2xl text-red-500 ml-2 opacity-0">
+                  *
+                </label>
               </div>
             </div>
             <div className="flexitemcenter justify-between mt-4">
@@ -385,7 +397,6 @@ const Register = () => {
                   id="name"
                   type="text"
                   name="name"
-                  placeholder="name"
                   onInput={(e) => setvalue(e, "name")}
                   className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -405,11 +416,11 @@ const Register = () => {
                 <input
                   id="age"
                   type="text"
-                  value={state.age}
+                  value={state.birthday.day && state.birthday.month && state.birthday.year ? `${state.age.years} ปี ${state.age.months} เดือน ${state.age.days} วัน` :""}
                   disabled
                   name="age"
-                  placeholder="กรุณาเลือกวันเกิด"
-                  className="outline-none ml-4 w-12 rounded bg-bginput px-2 py-1 border"
+                  placeholder="กรุณาเลือกวันเดือนปีเกิด"
+                  className="outline-none ml-4 w-auto rounded bg-bginput px-2 py-1 border"
                 />
                 <label className="text-2xl text-red-500 ml-2">*</label>
               </div>
@@ -422,7 +433,6 @@ const Register = () => {
                   id="organization"
                   type="text"
                   name="organization"
-                  placeholder="organization"
                   onInput={(e) => setvalue(e, "organization")}
                   className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -437,7 +447,6 @@ const Register = () => {
                   id="position"
                   type="text"
                   name="position"
-                  placeholder="position"
                   onInput={(e) => setvalue(e, "position")}
                   className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -446,13 +455,12 @@ const Register = () => {
             </div>
 
             <div className="flexitemcenter justify-between mt-4">
-              <label>เบอร์โทรศัพท์</label>
+              <label>กรณีแนบบัตรประจำตัว/หน่วยงาน</label>
               <div className="whitespace-nowrap">
                 <input
                   id="phone"
                   type="text"
                   name="phone"
-                  placeholder="phone"
                   onInput={(e) => setvalue(e, "phone")}
                   className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -547,7 +555,9 @@ const Register = () => {
 
             <button
               type="submit"
-              className="flexitemcenter justify-center cursor-pointer mt-8 mb-4 text-center bg-green-700 hover:bg-green-600 text-white w-2/5 min-w-[171px]  m-auto font-bold py-2 px-4 rounded"
+              className="flexitemcenter justify-center cursor-pointer
+               mt-8 mb-4 text-center bg-green-700 hover:bg-green-600 
+               text-white w-3/5 min-w-[171px]  m-auto font-bold py-2 px-4 rounded"
             >
               ลงทะเบียนบุคลากรทางการแพทย์
             </button>

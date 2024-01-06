@@ -28,14 +28,15 @@ export default function search({ setSearch, click, src, status, loading, text, d
                     rounded-lg bg-gray-50 
                     focus:ring-blue-500
                      focus:border-blue-500 "
-                    placeholder="Search" />
-                <button type="submit" onClick={() => click()} className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    placeholder="เลขบัตรประจำตัวประชาชน,เบอร์โทรศัพท์,ชื่อ" />
+                <button type="submit" onClick={() => click()} className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">ค้นหา</button>
             </div>
 
 
-            {(status && !doctor) && <p className=" text-center bg-green-500 hover:bg-green-500 text-white w-1/4 min-w-[162px] m-auto my-4 font-bold py-2 px-4 rounded">
-                ไม่พบข้อมูล...<br/>
-                กรุณาติดต่อเบอร์ <code>0xx-xxx-xxxx</code>
+            {(status && !doctor) && <p className=" text-center bg-green-500 hover:bg-green-500 text-white lg:w-1/3 min-w-[162px]  m-auto my-4 font-bold py-2 px-4 rounded">
+                ขออภัยในความไม่สะดวก กรุณาติดต่อ<br/>
+                โรงพยาบาลส่งเสริมสุขภาพ ตำบล บ้านกรด <br/>
+                เบอร์โทรศัพท์ติดต่อ<code> 035-707-521</code>
             </p>}
             {(status && doctor) && <Link href={'/new-patient'} className=" text-center bg-green-700 hover:bg-green-600 text-white w-1/4 min-w-[162px] m-auto my-4 font-bold py-2 px-4 rounded">
                 ลงทะเบียนผู้ป่วยใหม่
