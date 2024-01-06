@@ -18,7 +18,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setopen())
-    const checkAccount = await getAccount('1234')
+    const checkAccount = await getAccount(name)
     const url = checkAccount != null ? '/doctor' : "/"
 
     const status = await signIn('credentials', {
@@ -35,8 +35,8 @@ export default function Login() {
     } else {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: status.error,
+        title: "ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ถูกต้อง",
+        confirmButtonText:"ตกลง"
       });
     }
   };
@@ -66,7 +66,7 @@ export default function Login() {
               <input
                 id="username"
                 name="username"
-                placeholder="Pornput"
+                placeholder="พรพุทธ"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"

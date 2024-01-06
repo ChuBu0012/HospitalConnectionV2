@@ -14,6 +14,7 @@ const Register = () => {
   const [loading, setloading] = useState(false);
   const [state, setState] = useState({
     idcard: "",
+    username: "",
     doctor_id: "",
     name: "",
     birthday: {
@@ -88,6 +89,7 @@ const Register = () => {
     }
   };
   const handleSubmit = () => {
+    const Id_username = document.getElementById("username");
     const Id_idcard = document.getElementById("idcard");
     const Id_doctor_id = document.getElementById("doctor_id");
     const Id_name = document.getElementById("name");
@@ -98,7 +100,19 @@ const Register = () => {
     const Id_day = document.getElementById("day");
     const Id_month = document.getElementById("month");
     const Id_year = document.getElementById("year");
-    if (
+    if (state.username == "") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setTimeout(() => {
+        Id_username.classList.add("animate-shake");
+      }, 500);
+      setTimeout(() => {
+        Id_username.classList.remove("animate-shake");
+      }, 2000);
+      return;
+    } else if (
       state.idcard === "" ||
       idCardError === "เลขบัตรผิด" ||
       state.idcard.length != 13
@@ -274,7 +288,25 @@ const Register = () => {
               confirmButtonText: "ตกลง",
             });
           })
-          .finally(() => setloading(false));
+          .finally(() => {
+            setState({
+              idcard: "",
+              username: "",
+              doctor_id: "",
+              name: "",
+              birthday: {
+                day: 0,
+                month: 0,
+                year: 0,
+              },
+              organization: "",
+              position: "",
+              phone: "",
+              age: { years: 0, months: 0, days: 0 },
+              password: "",
+            });
+            setloading(false);
+          });
       }
     });
   };
@@ -318,15 +350,28 @@ const Register = () => {
             }}
             className="text-fontform max-w-[500px] m-auto"
           >
+            <div className="flexitemcenter justify-between mt-4">
+              <label>ชื่อบัญชี</label>
+              <div className="whitespace-nowrap">
+                <input
+                  id="username"
+                  type="text"
+                  name="username"
+                  onInput={(e) => setvalue(e, "username")}
+                  className=" outline-none ml-4 rounded bg-bginput px-2 py-1 border"
+                />
+                <label className="text-2xl text-red-500 ml-2">*</label>
+              </div>
+            </div>
             {/* เลขบัตร */}
-            <div className="flexitemcenter justify-between">
+            <div className="flexitemcenter justify-between mt-4">
               <label>เลขที่บัตรประชาชน</label>
               <div className="whitespace-nowrap">
                 <input
                   id="idcard"
                   type="text"
                   name="idcard"
-                  placeholder="กรุณาเลือกวันเดือนปีเกิด"
+                  placeholder=""
                   onInput={(e) => handleIdCardChange(e)}
                   className="outline-none ml-4 rounded bg-bginput px-2 py-1 border"
                 />
@@ -416,7 +461,13 @@ const Register = () => {
                 <input
                   id="age"
                   type="text"
-                  value={state.birthday.day && state.birthday.month && state.birthday.year ? `${state.age.years} ปี ${state.age.months} เดือน ${state.age.days} วัน` :""}
+                  value={
+                    state.birthday.day &&
+                    state.birthday.month &&
+                    state.birthday.year
+                      ? `${state.age.years} ปี ${state.age.months} เดือน ${state.age.days} วัน`
+                      : ""
+                  }
                   disabled
                   name="age"
                   placeholder="กรุณาเลือกวันเดือนปีเกิด"
@@ -494,7 +545,7 @@ const Register = () => {
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
                       <span className="font-semibold">
-                        Click to upload Profile
+                        อัปโหลดรูปภาพโปรไฟล์
                       </span>
                     </p>
                   </div>
@@ -538,9 +589,7 @@ const Register = () => {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
-                      <span className="font-semibold">
-                        Click to upload Profile
-                      </span>
+                      <span className="font-semibold">คลิกเพื่ออัปโหลด</span>
                     </p>
                   </div>
                   <input

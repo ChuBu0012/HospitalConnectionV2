@@ -21,9 +21,9 @@ export const getAccounts = async () => {
     }
 }
 
-export const getAccount = async (id) => {
+export const getAccount = async (username) => {
     try {
-        const requestUrl = `${url_dt}/search?id=${id}`;
+        const requestUrl = `${url_dt}/search?username=${username}`;
         const result = await fetchData(requestUrl, { method: "get" });
         return result
     } catch (error) {

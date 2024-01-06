@@ -9,12 +9,13 @@ export default NextAuth({
             name: "credentials",
             async authorize(credentials, req) {
                 Connect().catch(err => err)
-
+                console.log(credentials.name);
                 // เช็คว่ามีผู้ใช้อยู่
-                const result = await doctorModel.findOne({ doctor_id: credentials.name })
-                if (!result) throw new Error("No user Found with Email Please sign Up...!")
+                const result = await doctorModel.findOne({ username: credentials.name })
+                console.log(result);
+                if (!result) throw new Error("ไม่พบชื่อผู้ใช้งานนี้ กรุณาลงทะเบียน")
 
-                if (result.password !== credentials.password || result.doctor_id !== credentials.name) throw new Error("Username or Password doesn't match")
+                if (result.password !== credentials.password || result.username !== credentials.name) throw new Error("ชื่อผู้ใช้งาน หรือรหัสผ่านไม่ตรงกัน")
 
                 return {
                     name: { name: credentials.name, role: 'Doctor' }
