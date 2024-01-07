@@ -506,7 +506,7 @@ const Register = () => {
             </div>
 
             <div className="flexitemcenter justify-between mt-4">
-              <label>กรณีแนบบัตรประจำตัว/หน่วยงาน</label>
+              <label>เบอร์โทรติดต่อ</label>
               <div className="whitespace-nowrap">
                 <input
                   id="phone"
@@ -545,7 +545,7 @@ const Register = () => {
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
                       <span className="font-semibold">
-                        อัปโหลดรูปภาพโปรไฟล์
+                      กรณีแนบบัตรประจำตัว/หน่วยงาน
                       </span>
                     </p>
                   </div>
@@ -589,7 +589,7 @@ const Register = () => {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
-                      <span className="font-semibold">คลิกเพื่ออัปโหลด</span>
+                      <span className="font-semibold">กรณีแนบบัตรประจำตัว/หน่วยงาน</span>
                     </p>
                   </div>
                   <input
