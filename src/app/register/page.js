@@ -522,7 +522,10 @@ const Register = () => {
             {Image ? (
               ""
             ) : (
-              <div className="flex items-center justify-center w-full mt-8">
+              <div className="flex flex-col items-center justify-center md:items-start md:justify-start w-full mt-8">
+                <label className="text-left mb-2 text-lg">
+                  กรณีแนบบัตรประจำตัว/หน่วยงาน
+                </label>
                 <label
                   htmlFor="dropzone-file"
                   className="flex flex-col items-center justify-center 
@@ -544,9 +547,7 @@ const Register = () => {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
-                      <span className="font-semibold">
-                      กรณีแนบบัตรประจำตัว/หน่วยงาน
-                      </span>
+                      <span className="font-semibold">อัปโหลดรูปภาพที่นี่</span>
                     </p>
                   </div>
                   <input
@@ -561,9 +562,12 @@ const Register = () => {
 
             {Image && (
               <div className="relative mt-8">
+                <label className="text-left text-lg">
+                  กรณีแนบบัตรประจำตัว/หน่วยงาน
+                </label>
                 <img
                   src={Image}
-                  className="  m-auto rounded-lg object-contain max-h-[256px]"
+                  className="  m-auto mt-4 rounded-lg object-contain max-h-[256px]"
                   height={256}
                   width={500}
                   alt=""
@@ -589,7 +593,9 @@ const Register = () => {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-gray-500 text-center ">
-                      <span className="font-semibold">กรณีแนบบัตรประจำตัว/หน่วยงาน</span>
+                      <span className="font-semibold">
+                        กรณีแนบบัตรประจำตัว/หน่วยงาน
+                      </span>
                     </p>
                   </div>
                   <input
