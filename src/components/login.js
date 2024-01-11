@@ -66,7 +66,7 @@ export default function Login() {
               <input
                 id="username"
                 name="username"
-                placeholder="พรพุทธ"
+                placeholder=""
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
